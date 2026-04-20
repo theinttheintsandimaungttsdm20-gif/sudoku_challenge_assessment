@@ -94,33 +94,28 @@ public class SudokuValidationTest {
 
 	// check invalid cell values
 	@Test
-	void shouldThrowWhenCellContainsZero() {
-		assertThrows(IllegalArgumentException.class,
-				() -> sudokuValidationService.isValidSudoku(SudokuTestBoards.INVALID_CELL_ZERO));
+	void shouldReturnFalseWhenCellContainsZero() {
+		assertFalse(sudokuValidationService.isValidSudoku(SudokuTestBoards.INVALID_CELL_ZERO));
 	}
 
 	@Test
-	void shouldThrowWhenCellContainsSpace() {
-		assertThrows(IllegalArgumentException.class,
-				() -> sudokuValidationService.isValidSudoku(SudokuTestBoards.INVALID_CELL_SPACE));
+	void shouldReturnFalseWhenCellContainsSpace() {
+		assertFalse(sudokuValidationService.isValidSudoku(SudokuTestBoards.INVALID_CELL_SPACE));
 	}
 
 	@Test
-	void shouldThrowWhenCellContainsSpecialChar() {
-		assertThrows(IllegalArgumentException.class,
-				() -> sudokuValidationService.isValidSudoku(SudokuTestBoards.INVALID_CELL_SPECIAL_CHAR));
+	void shouldReturnFalseWhenCellContainsSpecialChar() {
+		assertFalse(sudokuValidationService.isValidSudoku(SudokuTestBoards.INVALID_CELL_SPECIAL_CHAR));
 	}
 
 	@Test
-	void shouldThrowWhenCellContainsInvalidChar() {
-		assertThrows(IllegalArgumentException.class,
-				() -> sudokuValidationService.isValidSudoku(SudokuTestBoards.INVALID_CELL_CHAR));
+	void shouldReturnFalseWhenCellContainsInvalidChar() {
+		assertFalse(sudokuValidationService.isValidSudoku(SudokuTestBoards.INVALID_CELL_CHAR));
 	}
 
 	@Test
-	void shouldThrowWhenBoardHasEmptyWithInvalid() {
-		assertThrows(IllegalArgumentException.class,
-				() -> sudokuValidationService.isValidSudoku(SudokuTestBoards.INVALID_EMPTY_CHAR));
+	void shouldReturnFalseWhenBoardHasEmptyWithInvalid() {
+		assertFalse(sudokuValidationService.isValidSudoku(SudokuTestBoards.INVALID_EMPTY_CHAR));
 	}
 
 	// -- Edge cases: check True, when board is with '_' incomplete or complete
