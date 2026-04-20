@@ -28,9 +28,25 @@ public class ValidationService {
 		this.rowMappingService = rowMappingService;
 	}
 
+	/**
+	 * Method to check correctness of sudoku by checking grid size 9x9, invalid cell
+	 * value and game rule.
+	 * 
+	 * @param board a 9x9 two-dimensional char array representing the Sudoku board.
+	 *              Use '1'-'9' for filled cells and '_' for empty cells.
+	 * @return true if all characters are valid and no rule violations exist, false
+	 *         if invalid characters or duplicate numbers are found
+	 * @throws IllegalArgumentException if board is null, row count is not 9, any
+	 *                                  row is null, or column count is not 9
+	 */
 	public boolean isValidSudoku(char[][] board) {
-		// Track seen numbers for rows, columns, and boxes
+		// Initial validation check
 		validate(board);
+		// return true if the user enter char is valid and has no rule violation
+		return !isInvalidCharacter(board) && !hasRuleViolation(board);
+	}
+
+	private boolean hasRuleViolation(char[][] board) {
 		Set<String> seen = new HashSet<>();
 
 		for (int row = 0; row < 9; row++) {
@@ -43,19 +59,19 @@ public class ValidationService {
 				String boxKey = String.format(SudokuConstant.BOX_KEY_ID, row / 3, col / 3, cell);
 
 				if (cell != SudokuConstant.EMPTY_CELL) {
-					// Check if any rule is violated
+					// Return true if any rule is violated
 					if (seen.contains(rowKey)) {
 						System.out.println(String.format(SudokuConstant.MSG_INVALID_ROW, cell,
 								rowMappingService.getRowLabel(row)));
-						return false;
+						return true;
 					}
 					if (seen.contains(colKey)) {
 						System.out.println(String.format(SudokuConstant.MSG_INVALID_COL, cell, (col + 1)));
-						return false;
+						return true;
 					}
 					if (seen.contains(boxKey)) {
 						System.out.println(String.format(SudokuConstant.MSG_INVALID_BOX, cell));
-						return false;
+						return true;
 					}
 
 					// Add all identifiers to seen set
@@ -65,23 +81,27 @@ public class ValidationService {
 				}
 			}
 		}
-		return true;
+		return false;
 	}
 
 	private void validate(char[][] board) {
 		checkNullValues(board);
 		checkInvalidRowCount(board);
 		checkInvalidColumnCount(board);
-		checkInvalidCharacter(board);
 	}
 
-	private void checkInvalidCharacter(char[][] board) {
-		for (int row = 0; row < SudokuConstant.BOARD_SIZE; row++)
-			for (int col = 0; col < SudokuConstant.BOARD_SIZE; col++)
-				if (!isValidChar(board[row][col]))
-					throw new IllegalArgumentException(String.format(SudokuConstant.MSG_INVALID_CHAR, board[row][col],
+	private boolean isInvalidCharacter(char[][] board) {
+		for (int row = 0; row < SudokuConstant.BOARD_SIZE; row++) {
+			for (int col = 0; col < SudokuConstant.BOARD_SIZE; col++) {
+				if (!isValidChar(board[row][col])) {
+					System.out.println(String.format(SudokuConstant.MSG_INVALID_CHAR, board[row][col],
 							rowMappingService.getRowLabel(row), col));
+					return true;
+				}
+			}
 
+		}
+		return false;
 	}
 
 	private void checkInvalidColumnCount(char[][] board) {
