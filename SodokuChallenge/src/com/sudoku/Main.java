@@ -1,36 +1,31 @@
 package com.sudoku;
 
+import java.util.Scanner;
+
+import com.sudoku.config.SudokuGameConfig;
+import com.sudoku.constant.SudokuConstant;
 import com.sudoku.controller.SudokuGameController;
-import com.sudoku.helper.RowMappingHelper;
-import com.sudoku.model.Board;
-import com.sudoku.service.HintService;
-import com.sudoku.service.PuzzleService;
-import com.sudoku.service.ValidationService;
 import com.sudoku.view.SudokuGameView;
 
+/**
+ * Runnable entry of the Sudoku application.
+ */
 public class Main {
 
 	public static void main(String[] args) {
-		// generate puzzle
-		char[][] initialBoard = PuzzleService.generatePuzzle();
-		char[][] solution = PuzzleService.getSolution();
+		Scanner scanner = new Scanner(System.in);
+        do {
+            SudokuGameController controller = SudokuGameConfig.init();
+            SudokuGameView view = new SudokuGameView(controller,scanner);
+            view.start();
+        } while (willPlayAgain(scanner));
 
-		// create model
-		Board board = new Board(initialBoard);
+        System.out.println(SudokuConstant.MSG_GOODBYE);
+    }
 
-		// create services
-		RowMappingHelper rowMappingHelper = new RowMappingHelper();
-		ValidationService validationService = new ValidationService(rowMappingHelper);
-		HintService hintService = new HintService(solution);
-
-		// create controller
-		SudokuGameController controller = new SudokuGameController(board, validationService, hintService,
-				rowMappingHelper);
-
-		// create view, pass controller
-		SudokuGameView view = new SudokuGameView(controller);
-
-		// start, view drives everything
-		view.start();
-	}
+    private static boolean willPlayAgain(Scanner scanner) {
+        System.out.println(SudokuConstant.MSG_ASK_PLAY_AGAIN);
+			String input = scanner.nextLine().trim().toLowerCase();
+			return !input.equals(SudokuConstant.CMD_QUIT);
+		}
 }

@@ -102,25 +102,36 @@ public class SudokuGameController {
 		if (!cleared)
 			return Result.failure(ResultMessage.PREFILLED_CELL_CLEAR
 					.format(rowMappingHelper.getRowLabel(command.getRow()), command.getCol() + 1));
+		Result gameOverCheck = checkGameOver();
+		if (gameOverCheck.isGameOver())
+			return gameOverCheck;
 
 		return Result.success(ResultMessage.CELL_CLEARED.getMessage());
 	}
 
 	private Result handleHint() {
 		ValidationResult result = hintService.revealHint(board);
+		Result gameOverCheck = checkGameOver();
+		if (gameOverCheck.isGameOver())
+			return gameOverCheck;
 		return result.isValid() ? Result.success(result.getMessage()) : Result.failure(result.getMessage());
 	}
 
 	private Result handleCheck() {
 		ValidationResult result = validationService.isValidSudoku(board.getCells());
+		Result gameOverCheck = checkGameOver();
+		if (gameOverCheck.isGameOver())
+			return gameOverCheck;
 		return result.isValid() ? Result.success(result.getMessage()) : Result.failure(result.getMessage());
 	}
 
 	private Result checkGameOver() {
 		if (board.isComplete()) {
 			ValidationResult result = validationService.isValidSudoku(board.getCells());
-			if (result.isValid())
+			if (result.isValid()) {
 				return Result.gameOver(ResultMessage.GAME_COMPLETE.getMessage());
+			}
+
 		}
 		return Result.success(ResultMessage.SUCCESS.getMessage());
 	}

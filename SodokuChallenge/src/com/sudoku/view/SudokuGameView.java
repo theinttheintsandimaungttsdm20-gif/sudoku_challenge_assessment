@@ -12,18 +12,22 @@ import com.sudoku.model.Result;
 public class SudokuGameView {
 
 	private final SudokuGameController controller;
-	private final Scanner scanner = new Scanner(System.in);
+	private final Scanner scanner;
 
-	public SudokuGameView(SudokuGameController controller) {
+	public SudokuGameView(SudokuGameController controller, Scanner scanner) {
 		this.controller = controller;
+		this.scanner = scanner;
 	}
 
+	/**
+	 * View start by procedure
+	 */
 	public void start() {
-		showWelcome();
-		showBoard();
-		showHelp();
-		inputLoop();
-		showHelp();
+			showWelcome();
+			showBoard();
+			showHelp();
+			inputLoop();
+			showHelp();
 	}
 
 	private void inputLoop() {

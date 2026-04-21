@@ -26,6 +26,7 @@ public class SudokuConstant {
 	public static final String MSG_INVALID_NUMBER = "Number must be between 1 and 9";
 	public static final String MSG_INVALID_CMD = "Invalid command. Try 'B3 7' or 'hint' or 'C5 clear'";
 	public static final String MSG_GOODBYE = "Goodbye!";
+	public static final String MSG_ASK_PLAY_AGAIN = "Press ENTER to play again or type 'quit' to exit...";
 	public static final String MSG_HINT_NONE = "No hints available";
 
 	// Row, Col, Box key ID
