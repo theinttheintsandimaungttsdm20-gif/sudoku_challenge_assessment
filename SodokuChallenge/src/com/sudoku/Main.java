@@ -1,3 +1,5 @@
+package com.sudoku;
+
 import com.sudoku.controller.SudokuGameController;
 import com.sudoku.helper.RowMappingHelper;
 import com.sudoku.model.Board;

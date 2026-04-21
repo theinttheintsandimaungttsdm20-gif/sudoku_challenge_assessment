@@ -33,7 +33,7 @@ public class ValidationService {
 
 	/**
 	 * Method to check correctness of sudoku by checking grid size 9x9, invalid cell
-	 * value and game rule.
+	 * value and game rule. Built by using One-pass optimal method O(81) to reduce time complexity.
 	 * 
 	 * @param board a 9x9 two-dimensional char array representing the Sudoku board.
 	 *              Use '1'-'9' for filled cells and '_' for empty cells.
