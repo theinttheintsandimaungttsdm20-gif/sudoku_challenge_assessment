@@ -3,7 +3,7 @@
 ## Overview
 
 A command-line Sudoku game written in pure Java SE 8.
-No external libraries are used except JUnit 5 for testing.
+No external libraries are used except JUnit 1.12.x for testing.
 The application supports puzzle display, user interaction,
 validation, hints, and game completion detection.
 
