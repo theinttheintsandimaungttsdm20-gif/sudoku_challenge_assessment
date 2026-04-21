@@ -64,7 +64,9 @@ Enter command (e.g., A3 4, C5 clear, hint, check):
 ## Project Structure
 src/
 └── com/sudoku/
-├── Main.java                   - entry point
+├── Main.java                    - entry point
+├── config/
+│   ├── SudokuGameConfig.java     - game configuration by wiring service and controller
 ├── constant/
 │   ├── SudokuConstant.java     - all constants
 │   └── ResultMessage.java      - all result message templates
@@ -110,6 +112,10 @@ and the codebase remains easy to maintain and extend.
 - **Controller** never formats messages. Returns structured `Result` - Sucess, Failure, Quit or GameOver
 - **Service** never displays — returns `ValidationResult`
 - **Model** never validates — pure data with getters and setters
+
+## Application Wiring
+
+`Main` owns the play-again loop and a single shared `Scanner` instance, passed into `SudokuGameView` to avoid conflicting `System.in` readers.`SudokuGameConfig` wires all dependencies cleanly, creating a fresh board, services and controller per game while the same `Scanner` is reused. When a game ends, the user is prompted to press ENTER for a new game or type 'quit' to exit — each new game gets a completely fresh state.
 
 ### Dependency Injection via Constructor Injection
 By using Constructor Injection, I ensure the Controller depends on the abstraction (interface) rather than the implementation. 
