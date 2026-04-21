@@ -23,7 +23,7 @@ public class SudokuConstant {
 	public static final String MSG_WELCOME = "Welcome to Sudoku!";
 	public static final String MSG_VALID_BOARD = "No rule violations detected.";
 	public static final String MSG_GAME_COMPLETE = "Congratulations! Puzzle complete!";
-	public static final String MSG_PREFILLED_CELL = "Invalid move."; // need to append which cell is prefilled
+	public static final String MSG_PREFILLED_CELL = "Invalid move. %s is pre-filled.";
 	public static final String MSG_INVALID_NUMBER = "Number must be between 1 and 9";
 	public static final String MSG_INVALID_CMD = "Invalid command. Try 'B3 7' or 'hint' or 'C5 clear'";
 	public static final String MSG_GOODBYE = "Goodbye!";
@@ -46,4 +46,5 @@ public class SudokuConstant {
 	public static final String MSG_INVALID_ROW_LENGTH = "Board must have exactly 9 rows, found: %d";
 	// Invalid character '$' at row B col 5
 	public static final String MSG_INVALID_CHAR = "Invalid character %c at row %s column %d";
+	
 }

@@ -1,10 +1,15 @@
 package com.sudoku.test;
 
-import com.sudoku.service.RowMappingService;
-import com.sudoku.service.ValidationService;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
+import com.sudoku.helper.RowMappingHelper;
+import com.sudoku.model.ValidationResult;
+import com.sudoku.service.ValidationService;
 
 /**
  * @author TheintSandi
@@ -18,12 +23,12 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class SudokuValidationTest {
 	private ValidationService sudokuValidationService;
-	private RowMappingService rowMappingService;
-	
+	private RowMappingHelper rowMappingHelper;
+
 	@BeforeEach
 	void setUp() {
-		rowMappingService = new RowMappingService();
-		sudokuValidationService = new ValidationService(rowMappingService);
+		rowMappingHelper = new RowMappingHelper();
+		sudokuValidationService = new ValidationService(rowMappingHelper);
 	}
 
 	// -- check invalid row length
@@ -67,17 +72,20 @@ public class SudokuValidationTest {
 	// check sudoku rule i.e, row, col, box has to be no duplicate
 	@Test
 	void shouldReturnFalseWhenRowHasDuplicate() {
-		assertFalse(sudokuValidationService.isValidSudoku(SudokuTestBoards.DUPLICATE_ROW));
+		ValidationResult result = sudokuValidationService.isValidSudoku(SudokuTestBoards.DUPLICATE_ROW);
+		assertFalse(result.isValid());
 	}
 
 	@Test
 	void shouldReturnFalseWhenColumnHasDuplicate() {
-		assertFalse(sudokuValidationService.isValidSudoku(SudokuTestBoards.DUPLICATE_COL));
+		ValidationResult result = sudokuValidationService.isValidSudoku(SudokuTestBoards.DUPLICATE_COL);
+		assertFalse(result.isValid());
 	}
 
 	@Test
 	void shouldReturnFalseWhenBoxHasDuplicate() {
-		assertFalse(sudokuValidationService.isValidSudoku(SudokuTestBoards.DUPLICATE_BOX));
+		ValidationResult result = sudokuValidationService.isValidSudoku(SudokuTestBoards.DUPLICATE_BOX);
+		assertFalse(result.isValid());
 	}
 
 	// check null board
@@ -95,27 +103,32 @@ public class SudokuValidationTest {
 	// check invalid cell values
 	@Test
 	void shouldReturnFalseWhenCellContainsZero() {
-		assertFalse(sudokuValidationService.isValidSudoku(SudokuTestBoards.INVALID_CELL_ZERO));
+		ValidationResult result = sudokuValidationService.isValidSudoku(SudokuTestBoards.INVALID_CELL_ZERO);
+		assertFalse(result.isValid());
 	}
 
 	@Test
 	void shouldReturnFalseWhenCellContainsSpace() {
-		assertFalse(sudokuValidationService.isValidSudoku(SudokuTestBoards.INVALID_CELL_SPACE));
+		ValidationResult result = sudokuValidationService.isValidSudoku(SudokuTestBoards.INVALID_CELL_SPACE);
+		assertFalse(result.isValid());
 	}
 
 	@Test
 	void shouldReturnFalseWhenCellContainsSpecialChar() {
-		assertFalse(sudokuValidationService.isValidSudoku(SudokuTestBoards.INVALID_CELL_SPECIAL_CHAR));
+		ValidationResult result = sudokuValidationService.isValidSudoku(SudokuTestBoards.INVALID_CELL_SPECIAL_CHAR);
+		assertFalse(result.isValid());
 	}
 
 	@Test
 	void shouldReturnFalseWhenCellContainsInvalidChar() {
-		assertFalse(sudokuValidationService.isValidSudoku(SudokuTestBoards.INVALID_CELL_CHAR));
+		ValidationResult result = sudokuValidationService.isValidSudoku(SudokuTestBoards.INVALID_CELL_CHAR);
+		assertFalse(result.isValid());
 	}
 
 	@Test
 	void shouldReturnFalseWhenBoardHasEmptyWithInvalid() {
-		assertFalse(sudokuValidationService.isValidSudoku(SudokuTestBoards.INVALID_EMPTY_CHAR));
+		ValidationResult result = sudokuValidationService.isValidSudoku(SudokuTestBoards.INVALID_EMPTY_CHAR);
+		assertFalse(result.isValid());
 	}
 
 	// -- Edge cases: check True, when board is with '_' incomplete or complete
@@ -123,17 +136,20 @@ public class SudokuValidationTest {
 	// board or all empty cell
 	@Test
 	void shouldReturnTrueForValidAndCompleteBoard() {
-		assertTrue(sudokuValidationService.isValidSudoku(SudokuTestBoards.COMPLETE));
+		ValidationResult result = sudokuValidationService.isValidSudoku(SudokuTestBoards.COMPLETE);
+		assertTrue(result.isValid());
 	}
 
 	@Test
 	void shouldReturnTrueForValidIncompleteBoard() {
-		assertTrue(sudokuValidationService.isValidSudoku(SudokuTestBoards.INITIAL));
+		ValidationResult result = sudokuValidationService.isValidSudoku(SudokuTestBoards.INITIAL);
+		assertTrue(result.isValid());
 	}
 
 	@Test
 	void shouldReturnTrueWhenBoardIsAllEmpty() {
-		assertTrue(sudokuValidationService.isValidSudoku(SudokuTestBoards.EMPTY));
+		ValidationResult result = sudokuValidationService.isValidSudoku(SudokuTestBoards.EMPTY);
+		assertTrue(result.isValid());
 	}
 
 }
